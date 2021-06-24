@@ -1,0 +1,44 @@
+---
+- name: install jenkins on Jenkins Servers
+  hosts: ci
+  become: true
+  vars:
+    - jenkins_admin_password_file: /var/lib/jenkins/secrets/initialAdminPassword
+  tasks:
+  - name: include dev playbook packages
+    include: maven_playbook.yml
+  - name: create Jenkins repo
+    yum_repository:
+      name: jenkins
+      description: Jenkins Official Repo for Centos 7
+      baseurl: http://pkg.jenkins.io/redhat
+      gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+      gpgcheck: yes
+      enabled: yes
+      state: present
+  - name: install jenkins
+    yum:
+      update_cache: yes
+      name: jenkins
+      state: present
+  - name: start jenkins server
+    service:
+      name: jenkins
+      state: started
+      enabled: yes
+  - name: wait 10 seconds until jenkins starts
+    wait_for:
+      timeout: 10
+  - name: check initialpassword file exists
+    stat:
+      path: "{{ jenkins_admin_password_file }}"
+    register: password_file
+  - name: cat jenkins default key into regisered variable
+    slurp:
+      src: "{{ jenkins_admin_password_file }}"
+    register: jenkinspassword
+    when: password_file.stat.exists != false
+  - name: show initial jenkins password
+    debug:
+      var: jenkinspassword.stdout
+    when: password_file.stat.exists != false

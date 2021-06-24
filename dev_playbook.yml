@@ -3,34 +3,5 @@
   hosts: dev
   become: yes
   tasks:
-  - name: install utilities
-    apt: 
-     update_cache: yes
-     name:
-      - git
-      - nano
-      - default-jdk
-      - wget
-  - name: install Maven manually
-    block:
-    - name: Download, uncompress and copy Maven
-      unarchive:
-        src: https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
-        dest: /opt
-        remote_src: yes
-    - name: create maven.sh to export ENV variables
-      lineinfile:
-        dest: /etc/profile.d/maven.sh
-        line: "{{item.line}}"
-        create: yes
-      with_items:
-      - {line: '#!/bin/bash'}
-      - {line: 'export M2_HOME=/opt/apache-maven-3.8.1'}
-      - {line: 'export M2=$M2_HOME/bin'}
-      - {line: 'export PATH=$PATH:$M2'}
-    - name: export Maven ENV variables
-      shell: ". /etc/profile.d/maven.sh"	
-      register: export_check
-    - name: debug shell task
-      debug:
-        var: export_check
+  - name: install maven
+    include: maven_playbook.yml
