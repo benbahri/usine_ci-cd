@@ -30,3 +30,7 @@
       - {line: 'export PATH=$PATH:$M2'}
     - name: export Maven ENV variables
       shell: ". /etc/profile.d/maven.sh"	
+      register: export_check
+    - name: debug shell task
+      debug:
+        var: export_check
