@@ -1,0 +1,10 @@
+---
+# tasks file for sonar_role
+- name: java
+  include: javaRedhat.yml
+  when: ansible_os_family == "RedHat"
+- name: java
+  include: javaDebian.yml
+  when: ansible_os_family == "Debian"
+- name: sonar
+  include: sonar.yml

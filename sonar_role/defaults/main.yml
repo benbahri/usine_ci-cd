@@ -1,0 +1,5 @@
+---
+# defaults file for sonar_role
+sonar_version: 8.9.1.44547
+sonar_installation_path: /opt
+sonar_user: sonarqube

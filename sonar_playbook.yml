@@ -1,0 +1,6 @@
+---
+- name: install sonarqube on Jenkins Servers
+  hosts: ci
+  become: true
+  roles:
+  - sonar_role

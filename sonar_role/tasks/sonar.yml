@@ -1,0 +1,38 @@
+---
+- name: download sonarqube
+  unarchive:
+    src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-{{sonar_version}}.zip
+    dest: "{{sonar_installation_path}}"
+    remote_src: yes
+
+- name: create symlink
+  file:
+    src: "{{sonar_installation_path}}/sonarqube-{{sonar_version}}"
+    dest: "{{sonar_installation_path}}/sonarqube"
+    state: link
+
+- name: create sonarqube user
+  user:
+    name: sonarqube
+    create_home: no
+    shell: /bin/false
+
+- name: change ownership
+  file:
+    path: "{{sonar_installation_path}}/sonarqube-{{sonar_version}}"
+    state: directory
+    recurse: yes
+    owner: sonarqube
+    group: sonarqube
+
+- name: create service file from template
+  template:
+    src: templates/sonarqube.service.j2
+    dest: /etc/systemd/system/sonarqube.service
+
+- name: sonar service started and enabled
+  systemd:
+    name: sonarqube
+    state: started
+    enabled: yes
+    daemon_reload: yes
