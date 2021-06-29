@@ -1,0 +1,6 @@
+---
+# defaults file for elk-role
+kibana_ip: "{{ansible_eth1.ipv4.address}}"
+kibana_port: 5601
+elasticsearch_ip: "{{ansible_eth1.ipv4.address}}"
+elasticsearch_port: 9200

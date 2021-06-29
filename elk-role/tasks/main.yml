@@ -1,0 +1,17 @@
+---
+# tasks file for elk-role
+- name: install elatic repo
+  yum_repository:
+    name: elsatic
+    description: Elastic Repo
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    gpgcheck: yes
+
+- name: install elasticsearch
+  include: elasticsearch.yml
+- name: install kibana
+  include: kibana.yml
+
+
+

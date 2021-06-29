@@ -1,0 +1,17 @@
+---
+# tasks file to install kibana
+- name: install kibana
+  yum:
+    name: kibana
+
+- name: kibana configuration
+  template:
+    src: templates/kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+  notify: restart kibana
+
+- name: start and enable service
+  systemd:
+    name: kibana
+    state: started
+    enabled: yes

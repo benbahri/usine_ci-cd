@@ -1,0 +1,17 @@
+---
+# tasks file to install elasticsearch
+- name: install elasticsearch
+  yum:
+    name: elasticsearch
+
+- name: elasticsearch configuration
+  template:
+    src: templates/elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify: restart elsaticsearch
+
+- name: start and enable service
+  systemd:
+    name: elasticsearch
+    state: started
+    enabled: yes

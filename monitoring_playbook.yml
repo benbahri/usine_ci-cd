@@ -1,0 +1,6 @@
+---
+- name: install monitoring server
+  hosts: monitoring
+  become: yes
+  roles:
+  - elk-role
