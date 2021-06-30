@@ -4,9 +4,9 @@
   become: true
   vars:
     - jenkins_admin_password_file: /var/lib/jenkins/secrets/initialAdminPassword
+  roles:
+    - maven-role
   tasks:
-  - name: include dev playbook packages
-    include: maven_playbook.yml
   - name: create Jenkins repo
     yum_repository:
       name: jenkins

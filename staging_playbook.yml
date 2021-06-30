@@ -1,0 +1,7 @@
+---
+- name: install docker
+  hosts: staging
+  become: yes
+  roles:
+    - role: docker-role
+      docker_user: vagrant
