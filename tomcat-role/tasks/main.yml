@@ -8,7 +8,7 @@
 
 - name: download Tomcat and unzip
   unarchive:
-    src: "https://downloads.apache.org/tomcat/tomcat-{{ tomcat_major_version }}/{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+    src: "https://downloads.apache.org/tomcat/tomcat-{{ tomcat_major_version }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
     dest: "{{ install_folder }}"
     remote_src: yes
     owner: tomcat

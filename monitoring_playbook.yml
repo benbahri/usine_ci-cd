@@ -9,4 +9,4 @@
   hosts: ci,prod,staging
   become: yes
   roles:
-    - metricbeat-role
+  - metricbeat-role
