@@ -1,0 +1,20 @@
+---
+# tasks file to install elasticsearch
+- name: install metricbeat
+  yum:
+    name: metricbeat
+
+- name: metricbeat configuration
+  template:
+    src: templates/metricbeat.yml.j2
+    dest: /etc/metricbeat/metricbeat.yml
+  notify: restart metricbeat
+
+- name: install metricbeat dashboard on kibana
+  command: metricbeat setup -e
+
+- name: start and enable service
+  systemd:
+    name: metricbeat
+    state: started
+    enabled: yes

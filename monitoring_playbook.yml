@@ -4,3 +4,9 @@
   become: yes
   roles:
   - elk-role
+
+- name: install beats on monitored servers
+  hosts: ci,prod,staging
+  become: yes
+  roles:
+    - metricbeat-role
