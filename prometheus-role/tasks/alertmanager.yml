@@ -1,7 +1,7 @@
 ---
 - name: download alertmanager
   unarchive:
-    src: https://github.com/alertmanager/alertmanager/releases/download/v{{alertmanager_version}}/alertmanager-{{alertmanager_version}}.linux-amd64.tar.gz
+    src: https://github.com/prometheus/alertmanager/releases/download/v{{alertmanager_version}}/alertmanager-{{alertmanager_version}}.linux-amd64.tar.gz
     dest: "{{alertmanager_installation_path}}"
     remote_src: yes
 
