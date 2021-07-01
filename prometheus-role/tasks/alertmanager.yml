@@ -31,7 +31,7 @@
     dest: /usr/local/bin/
     owner: alertmanager
     group: alertmanager
-    mode: 755
+    mode: 0755
     remote_src: yes
   loop:
   - {path: "{{alertmanager_installation_path}}/alertmanager-{{alertmanager_version}}.linux-amd64/alertmanager"}
