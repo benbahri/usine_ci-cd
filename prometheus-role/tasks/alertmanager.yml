@@ -27,12 +27,15 @@
 
 - name: copy binaries
   copy:
-    src:
-      - "{{alertmanager_installation_path}}/alertmanager-{{alertmanager_version}}.linux-amd64/alertmanager"
-      - "{{alertmanager_installation_path}}/alertmanager-{{alertmanager_version}}.linux-amd64/amtool"
+    src: "{{item.path}}"
     dest: /usr/local/bin/
     owner: alertmanager
     group: alertmanager
+    mode: 755
+    remote_src: yes
+  loop:
+  - {path: "{{alertmanager_installation_path}}/alertmanager-{{alertmanager_version}}.linux-amd64/alertmanager"}
+  - {path: "{{alertmanager_installation_path}}/alertmanager-{{alertmanager_version}}.linux-amd64/amtool"}
 
 - name: create config file from template
   template:
