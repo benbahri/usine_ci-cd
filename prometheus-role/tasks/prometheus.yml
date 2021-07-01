@@ -1,0 +1,62 @@
+---
+- name: download prometheus
+  unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v{{prometheus_version}}/prometheus-{{prometheus_version}}.linux-amd64.tar.gz
+    dest: "{{prometheus_installation_path}}"
+    remote_src: yes
+
+- name: create prometheus user
+  user:
+    name: prometheus
+    create_home: no
+    shell: /bin/false
+
+- name: create etc folder
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+
+- name: create var lib folder
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+
+- name: copy binaries
+  copy:
+    src:
+      - "{{prometheus_installation_path}}"/prometheus
+      - "{{prometheus_installation_path}}"/promtool
+    dest: /usr/local/bin/
+    owner: prometheus
+    group: prometheus
+
+- name: copy librares
+  copy:
+    src:
+      - "{{prometheus_installation_path}}"/consoles
+      - "{{prometheus_installation_path}}"/console_libraries
+    dest: /etc/prometheus
+    owner: prometheus
+    group: prometheus
+    recurse: yes
+
+- name: create config file from template
+  template:
+    src: templates/prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+
+- name: create service file from template
+  template:
+    src: templates/prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+
+- name: prometheus service started and enabled
+  systemd:
+    name: prometheus
+    state: started
+    enabled: yes
+    daemon_reload: yes

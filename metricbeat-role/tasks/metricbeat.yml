@@ -1,5 +1,5 @@
 ---
-# tasks file to install elasticsearch
+# tasks file to install metricbeat
 - name: install metricbeat
   yum:
     name: metricbeat
