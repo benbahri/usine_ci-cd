@@ -3,3 +3,9 @@
 prometheus_version: 2.28.0
 prometheus_installation_path: /tmp
 prometheus_user: prometheus
+alertmanager_version: 0.22.2
+alertmanager_installation_path: /tmp
+alertmanager_user: alertmanager
+alertmanager_smtp_smarthost: ""
+alertmanager_smtp_from: ""
+alertmanager_smtp_to: ""
