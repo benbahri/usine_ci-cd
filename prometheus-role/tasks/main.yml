@@ -1,4 +1,6 @@
 ---
 # tasks file for prometheus role
-- name: java
+- name: prometheus
   include: prometheus.yml
+- name: alertmanager
+  include: alertmanager.yml
