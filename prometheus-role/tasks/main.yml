@@ -1,4 +1,4 @@
 ---
 # tasks file for prometheus role
 - name: java
-  include: prometrheus.yml
+  include: prometheus.yml

@@ -4,6 +4,7 @@
   become: yes
   roles:
   - elk-role
+  - prometheus-role
 
 - name: install beats on monitored servers
   hosts: ci,prod,staging

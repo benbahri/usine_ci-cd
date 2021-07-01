@@ -27,22 +27,25 @@
 
 - name: copy binaries
   copy:
-    src:
-      - "{{prometheus_installation_path}}"/prometheus
-      - "{{prometheus_installation_path}}"/promtool
+    src: "{{item.path}}"
     dest: /usr/local/bin/
     owner: prometheus
     group: prometheus
-
+    mode: 755
+    remote_src: yes
+  with_items:
+  - {path: "{{prometheus_installation_path}}/prometheus-{{prometheus_version}}.linux-amd64/prometheus"}
+  - {path: "{{prometheus_installation_path}}/prometheus-{{prometheus_version}}.linux-amd64/promtool"}
 - name: copy librares
   copy:
-    src:
-      - "{{prometheus_installation_path}}"/consoles
-      - "{{prometheus_installation_path}}"/console_libraries
+    src: "{{item.path}}"
     dest: /etc/prometheus
     owner: prometheus
     group: prometheus
-    recurse: yes
+    remote_src: yes
+  loop:
+  - {path: "{{prometheus_installation_path}}/prometheus-{{prometheus_version}}.linux-amd64/consoles"}
+  - {path: "{{prometheus_installation_path}}/prometheus-{{prometheus_version}}.linux-amd64/console_libraries"}
 
 - name: create config file from template
   template:
